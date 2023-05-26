@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".OptionActivity"
+    android:orientation="vertical"
+    android:background="@drawable/background">
+
+    <Button
+        android:id="@+id/btn_musicOpt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="背景音乐切换"
+        android:textAlignment="center"
+        android:background="@drawable/btn_shape"
+        android:textSize="17sp"
+        android:layout_marginTop="50dp"
+        android:textColor="@color/black"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="背景切换"
+        android:layout_marginTop="150dp"
+        android:textAlignment="center"
+        android:textSize="17sp"
+        android:textColor="@color/black"/>
+
+    <Spinner
+        android:id="@+id/sp_background_opt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_shape"
+        android:layout_marginTop="20dp"
+        android:spinnerMode="dropdown"/>
+
+</LinearLayout>
