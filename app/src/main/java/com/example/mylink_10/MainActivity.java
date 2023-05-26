@@ -20,6 +20,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.mylink_10.util.MediaPlayerSingleton;
 import com.example.mylink_10.util.ToastUtil;
+import com.example.mylink_10.util.getValuesUtil;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
@@ -47,8 +48,8 @@ public class MainActivity extends AppCompatActivity {
         initView(mBundle);
         player = MediaPlayerSingleton.getInstance(this, R.raw.bgm3);
         player.start();
-        sharedPreferences = getSharedPreferences("option-config", Context.MODE_PRIVATE);
-        String token = sharedPreferences.getString("token", "");
+//        sharedPreferences = getSharedPreferences("option-config", Context.MODE_PRIVATE);
+        String token = getValuesUtil.getStrValue(this, "token");
         Log.d("mainToken", token);
         if ("".equals(token)) {
             ToastUtil.show(this, "还没有登录，快去登录以获取更多体验吧！");
