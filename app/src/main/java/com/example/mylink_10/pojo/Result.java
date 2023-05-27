@@ -4,8 +4,7 @@ public class Result {
     private String code;
     private String error;
     private String data;
-
-//    Object data;
+    private String username;
 
     public Result() {
     }
@@ -37,6 +36,14 @@ public class Result {
 
     public void setData(String data) {
         this.data = data;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     @Override

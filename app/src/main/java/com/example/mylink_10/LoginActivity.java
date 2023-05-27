@@ -106,7 +106,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     }
                     reader.close();
                     SharedPreferences.Editor edit = sharedPreferences.edit();
-                    edit.putString("token",new Gson().fromJson(response.toString(), Result.class).getData());
+                    Gson mGson = new Gson();
+                    String s = response.toString();
+                    edit.putString("token",mGson.fromJson(s, Result.class).getData());
+                    edit.putString("username",mGson.fromJson(s,Result.class).getUsername());
                     edit.apply();
                     return "登录成功";
                 } else {

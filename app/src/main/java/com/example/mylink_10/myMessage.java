@@ -107,8 +107,7 @@ public class myMessage extends Fragment {
                 SharedPreferences.Editor edit = sharedPreferences.edit();
                 edit.putString("token","");
                 edit.commit();
-                startActivity(new Intent(getActivity(),MainActivity.class)
-                        .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
+                getActivity().recreate();
             });
             builder.setNegativeButton("否",(dialogInterface, i) -> {});
             builder.create().show();

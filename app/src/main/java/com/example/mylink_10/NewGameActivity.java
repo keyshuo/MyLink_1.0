@@ -22,6 +22,8 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import com.example.mylink_10.gameRelated.Game;
 import com.example.mylink_10.gameRelated.GameConf;
 import com.example.mylink_10.gameRelated.GameView;
+import com.example.mylink_10.util.DateFormatUtil;
+import com.example.mylink_10.util.getValuesUtil;
 
 import org.java_websocket.client.WebSocketClient;
 
@@ -43,15 +45,15 @@ public class NewGameActivity extends AppCompatActivity {
     private Handler handler = new Handler(Looper.myLooper()) {
         @Override
         public void handleMessage(@NonNull Message msg) {
-            if(msg.what == 0x666) {
+            if (msg.what == 0x666) {
                 tim -= 100;
-                if(tim == 0) {
+                if (tim == 0) {
                     stopTimer();
                     updateRecord(pos);
                     lost.setMessage("你一共成功通过了" + pos + "关！");
                     lost.show();
                 } else {
-                    String s = Float.toString((float)(1.0 * tim / 1000));
+                    String s = Float.toString((float) (1.0 * tim / 1000));
                     int dian = s.indexOf(".");
                     String s1 = s.substring(0, dian);
                     String s2 = s.substring(dian, dian + 2);
@@ -66,7 +68,7 @@ public class NewGameActivity extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
             Log.i("receiver", "ok");
             stopTimer();
-            if(finalTime[GameConf.n] - step * (pos + 1) <= 45000) {
+            if (finalTime[GameConf.n] - step * (pos + 1) <= 45000) {
                 stopTimer();
                 updateRecord(pos + 1);
                 over.setMessage("你一共成功通过了" + (pos + 1) + "关！");
@@ -100,7 +102,7 @@ public class NewGameActivity extends AppCompatActivity {
 
     private void startTimer() {
         stopTimer();
-        if(timer == null) {
+        if (timer == null) {
             timer = new Timer();
             timer.schedule(new TimerTask() {
                 @Override
@@ -112,7 +114,7 @@ public class NewGameActivity extends AppCompatActivity {
     }
 
     private void stopTimer() {
-        if(timer != null) {
+        if (timer != null) {
             timer.cancel();
             timer = null;
         }
@@ -126,7 +128,7 @@ public class NewGameActivity extends AppCompatActivity {
     }
 
     private void displayRecord() {
-        if(cnt == null) {
+        if (cnt == null) {
             cnt = findViewById(R.id.cnt);
         }
         SharedPreferences sp = getSharedPreferences("record", Context.MODE_PRIVATE);
@@ -138,8 +140,9 @@ public class NewGameActivity extends AppCompatActivity {
     private void updateRecord(int count) {
         SharedPreferences sp = getSharedPreferences("option-config", Context.MODE_PRIVATE);
         SharedPreferences.Editor spEditor = sp.edit();
-        String s = "username:" + GameConf.n;
-        if(count > sp.getInt(s, 0)) {
+        String username = getValuesUtil.getStrValue(this, "username");
+        String s = username + " " + GameConf.n + " " + DateFormatUtil.getTime();
+        if (count > sp.getInt(s, 0)) {
             spEditor.putInt(s, count);
             spEditor.commit();
         }
@@ -168,31 +171,31 @@ public class NewGameActivity extends AppCompatActivity {
                     }
                 }).setCancelable(false);
         lost = new AlertDialog.Builder(this).setTitle("时间到！闯关失败……")
-                    .setNeutralButton("退出闯关", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            finish();
-                        }
-                    }).setPositiveButton("重新开始", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            pos = 0;
-                            start();
-                        }
-                    }).setCancelable(false);
+                .setNeutralButton("退出闯关", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                }).setPositiveButton("重新开始", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        pos = 0;
+                        start();
+                    }
+                }).setCancelable(false);
         over = new AlertDialog.Builder(this).setTitle("通关！").setIcon(R.drawable.success)
-                    .setNeutralButton("退出闯关", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            finish();
-                        }
-                    }).setPositiveButton("重新开始", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            pos = 0;
-                            start();
-                        }
-                    }).setCancelable(false);
+                .setNeutralButton("退出闯关", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                }).setPositiveButton("重新开始", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        pos = 0;
+                        start();
+                    }
+                }).setCancelable(false);
         start();
         setBroadcast();
     }

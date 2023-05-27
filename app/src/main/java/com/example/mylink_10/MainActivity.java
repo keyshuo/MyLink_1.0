@@ -49,12 +49,13 @@ public class MainActivity extends AppCompatActivity {
         player = MediaPlayerSingleton.getInstance(this, R.raw.bgm3);
         player.start();
 //        sharedPreferences = getSharedPreferences("option-config", Context.MODE_PRIVATE);
+        String username = getValuesUtil.getStrValue(this, "username");
         String token = getValuesUtil.getStrValue(this, "token");
-        Log.d("mainToken", token);
+        Log.d("username", username);
         if ("".equals(token)) {
             ToastUtil.show(this, "还没有登录，快去登录以获取更多体验吧！");
         } else {
-            ToastUtil.show(this, "欢迎回来");
+            ToastUtil.show(this, username+",欢迎回来");
         }
     }
 
@@ -152,5 +153,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onRestart() {
         player.start();
         super.onRestart();
+    }
+
+    @Override
+    protected void onStart() {
+        player.start();
+        Log.d("Start","Start");
+        super.onStart();
     }
 }
