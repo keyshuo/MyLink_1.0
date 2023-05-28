@@ -11,9 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import com.example.mylink_10.util.getValuesUtil;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -81,6 +84,7 @@ public class myMessage extends Fragment {
         super.onActivityCreated(savedInstanceState);
         Button btn_login = getActivity().findViewById(R.id.btn_login);
         Button btn_signup = getActivity().findViewById(R.id.btn_signup);
+        Button btn_ranking = getActivity().findViewById(R.id.btn_ranking);
         ImageButton btn_option = getActivity().findViewById(R.id.btn_option);
         Button btn_logout = getActivity().findViewById(R.id.btn_logout);
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("option-config", Context.MODE_PRIVATE);
@@ -89,7 +93,10 @@ public class myMessage extends Fragment {
         if (!"".equals(token)) {
             btn_login.setEnabled(false);
             btn_signup.setEnabled(false);
+            TextView tv_username = getActivity().findViewById(R.id.tv_username);
+            tv_username.setText(getValuesUtil.getStrValue(getActivity(),"username"));
         } else {
+            btn_ranking.setEnabled(false);
             btn_logout.setEnabled(false);
         }
         //跳转登录页面
@@ -113,5 +120,6 @@ public class myMessage extends Fragment {
             builder.setNegativeButton("否",(dialogInterface, i) -> {});
             builder.create().show();
         });
+        btn_ranking.setOnClickListener(view -> startActivity(new Intent(getActivity(),RankingActivity.class)));
     }
 }

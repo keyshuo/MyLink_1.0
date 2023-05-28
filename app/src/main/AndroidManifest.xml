@@ -33,15 +33,6 @@
             android:name=".MusicActivity"
             android:exported="false" />
         <activity
-            android:name=".ChallengeActivity"
-            android:exported="false" />
-        <activity
-            android:name=".OnlineActivity"
-            android:exported="false" />
-        <activity
-            android:name=".StandaloneActivity"
-            android:exported="false" />
-        <activity
             android:name=".ModeSelectionActivity"
             android:exported="false" />
         <activity

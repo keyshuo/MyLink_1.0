@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -13,6 +14,7 @@ import android.os.Message;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,8 +24,9 @@ import com.example.mylink_10.gameRelated.Game;
 import com.example.mylink_10.gameRelated.GameConf;
 import com.example.mylink_10.gameRelated.GameView;
 
-import org.java_websocket.client.WebSocketClient;
-
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Timer;
@@ -35,7 +38,6 @@ public class XiuxianActivity extends AppCompatActivity {
     private final int finalTime = 0;
     private GameView gameView;
     private Game game;
-    private static WebSocketClient webSocketClient;
     private int tim;
     private TextView num;
     private Timer timer;
@@ -56,6 +58,7 @@ public class XiuxianActivity extends AppCompatActivity {
             win.setMessage("用时" + getTimeStr());
             Log.i("checktime", getNow());
             win.show();
+            new HttpRequestTask().execute();
         }
     };
 
@@ -144,6 +147,35 @@ public class XiuxianActivity extends AppCompatActivity {
         String s2 = ret.substring(dian, dian + 2);
         ret = s1 + s2 + "s";
         return ret;
+    }
+
+    private class HttpRequestTask extends AsyncTask<Void, Void, String> {
+
+        @Override
+        protected String doInBackground(Void... voids) {
+            try {
+                URL url = new URL("http://1.15.76.132:8080/login");
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("GET");
+
+                int responseCode = connection.getResponseCode();
+                if (responseCode == HttpURLConnection.HTTP_OK) {
+                    return "记录上传成功";
+                } else {
+//                    return "GET request failed. Response Code: " + responseCode;
+                    return "记录上传失败，请检查网络后重试";
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                return "Error: " + e.getMessage();
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            // 处理网络请求的结果
+            Toast.makeText(XiuxianActivity.this, result, Toast.LENGTH_SHORT).show();
+        }
     }
 
 }
