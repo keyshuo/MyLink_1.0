@@ -106,6 +106,7 @@ public class myMessage extends Fragment {
             builder.setPositiveButton("是",(dialogInterface, i) -> {
                 SharedPreferences.Editor edit = sharedPreferences.edit();
                 edit.putString("token","");
+                edit.putString("username","");
                 edit.commit();
                 getActivity().recreate();
             });

@@ -10,6 +10,6 @@ public class getValuesUtil {
      * @return          所取出的值，默认为空字符串
      */
     public static String getStrValue(Context context,String valueName) {
-        return context.getSharedPreferences("option-config",Context.MODE_PRIVATE).getString(valueName,"");
+       return context.getSharedPreferences("option-config",Context.MODE_PRIVATE).getString(valueName,"");
     }
 }
