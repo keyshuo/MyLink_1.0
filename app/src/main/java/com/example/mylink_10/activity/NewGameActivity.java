@@ -1,4 +1,4 @@
-package com.example.mylink_10;
+package com.example.mylink_10.activity;
 
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
@@ -19,6 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import com.example.mylink_10.R;
 import com.example.mylink_10.gameRelated.Game;
 import com.example.mylink_10.gameRelated.GameConf;
 import com.example.mylink_10.gameRelated.GameView;

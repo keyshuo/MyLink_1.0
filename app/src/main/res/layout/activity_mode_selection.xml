@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/background1"
     android:orientation="vertical"
-    tools:context=".ModeSelectionActivity">
+    tools:context=".activity.ModeSelectionActivity">
 
     <Button
         android:id="@+id/btn_standalone"

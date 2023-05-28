@@ -4,5 +4,10 @@
     <color name="white">#FFFFFFFF</color>
     <color name="grey">#778899</color>
     <color name="transparent">#11FF00FF</color>
+    <color name="transparentBlack">#11666666</color>
+    <color name="Turquoise1">#00F5FF</color>
+    <color name="LightSlateBlue">#8470FF</color>
+    <color name="dongtai">#ffcc66</color>
+    <color name="cm_item_transparent">#00000000</color>
 <!--    11000000-->
 </resources>

@@ -1,17 +1,22 @@
-package com.example.mylink_10;
+package com.example.mylink_10.activity;
 
-import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.mylink_10.MainActivity;
+import com.example.mylink_10.R;
+import com.example.mylink_10.pojo.Result;
 import com.example.mylink_10.pojo.User;
 import com.example.mylink_10.util.ToastUtil;
+import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.io.BufferedReader;
@@ -22,57 +27,58 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class SignUpActivity extends AppCompatActivity implements View.OnClickListener {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private static String u = "http://localhost:8080/user";
-    private static String bai = "https://www.baidu.com";
-    private static String registerUrl = "http://uwna3a.natappfree.cc/user";
-    private static String userJson;
 
-    @SuppressLint("MissingInflatedId")
+    private String userJson;
+    private static final String u = "https://www.baidu.com";
+    private static final String loginUrl = "http://1.15.76.132:8080/login";
+    private static SharedPreferences sharedPreferences = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_up);
-        findViewById(R.id.btn_signup_sign).setOnClickListener(this);
+        setContentView(R.layout.activity_login);
+        sharedPreferences = getSharedPreferences("option-config", Context.MODE_PRIVATE);
+        findViewById(R.id.btn_login_in).setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
-        EditText et_account_sign = findViewById(R.id.et_account_sign);
-        EditText et_username_sign = findViewById(R.id.et_username_sign);
-        EditText et_password_sign = findViewById(R.id.et_password_sign);
-        EditText et_confirmPwd_sign = findViewById(R.id.et_confirmPwd_sign);
-        String account = et_account_sign.getText().toString();
-        String username = et_username_sign.getText().toString();
-        String password = et_password_sign.getText().toString();
-        String confirmPwd = et_confirmPwd_sign.getText().toString();
-        boolean emptyCondition = "".equals(account) || "".equals(username) || "".equals(password) || "".equals(confirmPwd);
-        boolean pwdDifference = !password.equals(confirmPwd);
+        EditText et_account_login = findViewById(R.id.et_account_login);
+        EditText et_pwd_login = findViewById(R.id.et_pwd_login);
+        String account = et_account_login.getText().toString();
+        String password = et_pwd_login.getText().toString();
+        boolean emptyCondition = "".equals(account) || "".equals(password);
         if (emptyCondition) {
             ToastUtil.show(this, "请将所有信息填写完全！");
         } else {
-            if (account.length() != 11) {
-                ToastUtil.show(this, "账号长度过长或过短，请检查后重新输入！");
+            if (account.length() < 11) {
+                ToastUtil.show(this, "账号长度不足，请检查后重新输入！");
                 return;
             }
             if (password.length() < 6 || password.length() > 16) {
                 ToastUtil.show(this, "密码长度过短或过长，请检查后重新输入！");
-                return;
-            }
-            if (pwdDifference) {
-                ToastUtil.show(this, "两次密码不同，请检查后重新输入！");
             } else {
                 User user = new User();
-                user.setAccount(account);
-                user.setUsername(username);
-                user.setPassword(password);
+                user.setAccount("614481987");
+                user.setPassword("wx15015990723");
                 //将user转换为json字符串
                 userJson = new GsonBuilder().disableHtmlEscaping().create().toJson(user);
-                Log.d("JSON",userJson);
                 new HttpRequestTask().execute();
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                String token = sharedPreferences.getString("token", "");
+                if (!"".equals(token)) {
+                    startActivity(new Intent(LoginActivity.this, MainActivity.class)
+                            .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
+                }
             }
         }
+
     }
 
     private class HttpRequestTask extends AsyncTask<Void, Void, String> {
@@ -80,13 +86,12 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         @Override
         protected String doInBackground(Void... voids) {
             try {
-                URL url = new URL("http://1.15.76.132:8080/register");
+                URL url = new URL("http://1.15.76.132:8080/login");
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("POST");
                 //允许输出并写入json数据
                 connection.setDoOutput(true);
-                connection.setDoInput(true);
-                connection.setRequestProperty("Content-Type", "application/json");
+                connection.setRequestProperty("Content-Type", "application/json; charset=utf-8");
                 OutputStreamWriter osw = new OutputStreamWriter(connection.getOutputStream());
                 osw.write(userJson);
                 osw.flush();
@@ -102,9 +107,16 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                         response.append(line);
                     }
                     reader.close();
-                    return response.toString();
+                    SharedPreferences.Editor edit = sharedPreferences.edit();
+                    Gson mGson = new Gson();
+                    String s = response.toString();
+                    edit.putString("token",mGson.fromJson(s, Result.class).getData());
+                    edit.putString("username",mGson.fromJson(s,Result.class).getUsername());
+                    edit.apply();
+                    return "登录成功";
                 } else {
-                    return "GET request failed. Response Code: " + responseCode;
+//                    return "GET request failed. Response Code: " + responseCode;
+                    return "登录失败，请检查账号密码或网络后重试";
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -115,7 +127,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         @Override
         protected void onPostExecute(String result) {
             // 处理网络请求的结果
-            Toast.makeText(SignUpActivity.this, result, Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginActivity.this, result, Toast.LENGTH_SHORT).show();
         }
     }
 }

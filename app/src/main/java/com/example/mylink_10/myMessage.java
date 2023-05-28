@@ -16,6 +16,10 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.mylink_10.activity.LoginActivity;
+import com.example.mylink_10.activity.OptionActivity;
+import com.example.mylink_10.activity.RankingActivity;
+import com.example.mylink_10.activity.SignUpActivity;
 import com.example.mylink_10.util.getValuesUtil;
 
 /**
@@ -120,6 +124,6 @@ public class myMessage extends Fragment {
             builder.setNegativeButton("否",(dialogInterface, i) -> {});
             builder.create().show();
         });
-        btn_ranking.setOnClickListener(view -> startActivity(new Intent(getActivity(),RankingActivity.class)));
+        btn_ranking.setOnClickListener(view -> startActivity(new Intent(getActivity(), RankingActivity.class)));
     }
 }

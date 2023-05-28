@@ -1,4 +1,4 @@
-package com.example.mylink_10;
+package com.example.mylink_10.activity;
 
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
@@ -20,9 +20,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import com.example.mylink_10.R;
 import com.example.mylink_10.gameRelated.Game;
 import com.example.mylink_10.gameRelated.GameConf;
 import com.example.mylink_10.gameRelated.GameView;
+import com.example.mylink_10.util.getValuesUtil;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -157,6 +159,10 @@ public class XiuxianActivity extends AppCompatActivity {
                 URL url = new URL("http://1.15.76.132:8080/login");
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
+                //允许输出并写入数据
+                connection.setDoOutput(true);
+                connection.setDoInput(true);
+                connection.addRequestProperty("Authorization", getValuesUtil.getStrValue(XiuxianActivity.this,"token"));
 
                 int responseCode = connection.getResponseCode();
                 if (responseCode == HttpURLConnection.HTTP_OK) {

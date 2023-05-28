@@ -18,31 +18,40 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".RankingActivity"
+            android:name=".activity.RankingActivity"
             android:exported="false" />
         <activity
-            android:name=".NewGameActivity"
+            android:name=".activity.NewGameActivity"
             android:exported="false" />
         <activity
-            android:name=".DuizhanActivity"
+            android:name=".activity.DuizhanActivity"
             android:exported="false" />
         <activity
-            android:name=".XiuxianActivity"
+            android:name=".activity.XiuxianActivity"
             android:exported="false" />
         <activity
-            android:name=".MusicActivity"
+            android:name=".activity.MusicActivity"
             android:exported="false" />
         <activity
-            android:name=".ModeSelectionActivity"
+            android:name=".activity.ModeSelectionActivity"
             android:exported="false" />
         <activity
-            android:name=".OptionActivity"
+            android:name=".activity.OptionActivity"
             android:exported="false" />
         <activity
-            android:name=".SignUpActivity"
+            android:name=".activity.SignUpActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".activity.LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.CommunityRemarksActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.MyCommentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.PostTextActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

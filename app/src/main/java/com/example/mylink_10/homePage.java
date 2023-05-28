@@ -15,8 +15,8 @@ import android.widget.Spinner;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.mylink_10.activity.ModeSelectionActivity;
 import com.example.mylink_10.gameRelated.GameConf;
-import com.example.mylink_10.util.ToastUtil;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -83,7 +83,7 @@ public class homePage extends Fragment {
         SharedPreferences.Editor edit = sharedPreferences.edit();
         sp_difSel_home = getActivity().findViewById(R.id.sp_difSel_home);
         getActivity().findViewById(R.id.btn_playGame).setOnClickListener(view -> {
-            Intent intent = new Intent(getActivity(),ModeSelectionActivity.class);
+            Intent intent = new Intent(getActivity(), ModeSelectionActivity.class);
             startActivity(intent);
         });
         ArrayAdapter difSelAdapter = new ArrayAdapter(getActivity(),R.layout.item_selector,dif);
@@ -94,7 +94,7 @@ public class homePage extends Fragment {
                 edit.putInt("dif",i);
                 GameConf.update(i);
                 edit.commit();
-                ToastUtil.show(getActivity(),"现在选择的难度为：" + dif[i].substring(5,7));
+//                ToastUtil.show(getActivity(),"现在选择的难度为：" + dif[i].substring(5,7));
             }
 
             @Override

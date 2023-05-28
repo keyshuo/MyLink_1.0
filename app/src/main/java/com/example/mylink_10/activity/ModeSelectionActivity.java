@@ -1,4 +1,4 @@
-package com.example.mylink_10;
+package com.example.mylink_10.activity;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.mylink_10.R;
 import com.example.mylink_10.util.getValuesUtil;
 import com.google.gson.Gson;
 

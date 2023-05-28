@@ -1,4 +1,4 @@
-package com.example.mylink_10;
+package com.example.mylink_10.activity;
 
 import static android.content.ContentValues.TAG;
 
@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.mylink_10.R;
 import com.example.mylink_10.util.MediaPlayerSingleton;
 import com.example.mylink_10.util.ToastUtil;
 
