@@ -88,7 +88,7 @@ public class MyCommentActivity extends AppCompatActivity implements AdapterView.
             String token = getValuesUtil.getStrValue(this,"token");
             connection.setRequestProperty("Authorization",token);
             int responseCode = connection.getResponseCode();
-            //Log.d("GetAllMyComments", String.valueOf(responseCode));
+            Log.d("GetAllMyComments", String.valueOf(responseCode));
             if (responseCode == HttpURLConnection.HTTP_OK)  {
                 Log.d("GetAllMyComments ","success");
                 InputStream inputStream = connection.getInputStream();
@@ -104,7 +104,7 @@ public class MyCommentActivity extends AppCompatActivity implements AdapterView.
                 int code = responseJson.getInt("code");
 
                 if (code == 200) {
-                    //Log.d("GetAllMyComments code", String.valueOf(code));
+                    Log.d("GetAllMyComments code", String.valueOf(code));
                     // 解析服务器响应中的音乐列表
                     JSONArray MSGArray = responseJson.getJSONArray("data");
                     //Log.d("GetAllMyComments MSGArray",MSGArray.toString());

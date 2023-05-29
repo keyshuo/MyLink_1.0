@@ -10,6 +10,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mylink_10.R;
+import com.example.mylink_10.pojo.RankingResult;
 import com.google.gson.Gson;
 
 import java.io.BufferedReader;
@@ -21,20 +22,13 @@ import java.net.URL;
 
 public class RankingActivity extends AppCompatActivity {
 
+    private String[] ranking = {};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ranking);
         new HttpRequestTask().execute();
-        String[] ranking = {"李思林 2014010205 0123456",
-                "李思林 2014010205 0123456","李思林 2014010205 0123456",
-                "李思林 2014010205 0123456","李思林 2014010205 0123456",
-                "李思林 2014010205 0123456","李思林 2014010205 0123456",
-                "李思林 2014010205 0123456","李思林 2014010205 0123456",
-                "李思林 2014010205 0123456","李思林 2014010205 0123456",
-                "李思林 2014010205 0123456","李思林 2014010205 0123456",
-                "李思林 2014010205 0123456","李思林 2014010205 0123456",
-                "李思林 2014010205 0123456","李思林 2014010205 0123456",};
         //ListView相关
         ArrayAdapter rankingAdapter = new ArrayAdapter(this,R.layout.item_selector,ranking);
         ListView lv_ranking = findViewById(R.id.lv_ranking);
@@ -60,12 +54,15 @@ public class RankingActivity extends AppCompatActivity {
                         response.append(line);
                     }
                     reader.close();
+                    String res = response.toString();
                     Gson mGson = new Gson();
-                    Log.d("Ranking",response.toString());
-                    return response.toString();
+                    RankingResult rankingResult = mGson.fromJson(res, RankingResult.class);
+//                    data = mGson.fromJson(rankingResult.getData(), ScorePojo.class);
+                    Log.d("RankingResult",rankingResult.toString());
+                    return "数据获取成功";
                 } else {
-                    return "GET request failed. Response Code: " + responseCode;
-//                    return "登录失败，请检查账号密码或网络后重试";
+//                    return "GET request failed. Response Code: " + responseCode;
+                    return "数据获取失败，请检查网络后重试";
                 }
             } catch (IOException e) {
                 e.printStackTrace();
