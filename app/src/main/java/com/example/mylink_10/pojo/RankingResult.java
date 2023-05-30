@@ -1,10 +1,10 @@
 package com.example.mylink_10.pojo;
 
-import java.util.Arrays;
+import java.util.List;
 
 public class RankingResult {
     private String code;
-    private ScorePojo[] data;
+    private List<ScorePojo> data;
 
     public String getCode() {
         return code;
@@ -14,19 +14,11 @@ public class RankingResult {
         this.code = code;
     }
 
-    public ScorePojo[] getData() {
+    public List<ScorePojo> getData() {
         return data;
     }
 
-    public void setData(ScorePojo[] data) {
+    public void setData(List<ScorePojo> data) {
         this.data = data;
-    }
-
-    @Override
-    public String toString() {
-        return "RankingResult{" +
-                "code='" + code + '\'' +
-                ", data=" + Arrays.toString(data).replace("[","").replace("]","").replaceAll("ScorePojo","") +
-                '}';
     }
 }

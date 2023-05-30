@@ -18,12 +18,8 @@ public class CommunityMSG implements Serializable {
     private static List<String> rm_timeArray = Arrays.asList(new String[]{});
     private static List<String> rm_contentArray = Arrays.asList(new String[]{});
 
-    private static List<String> mypost_usernameArray = Arrays.asList(new String[]{});
     private static List<String> mypost_timeArray = Arrays.asList(new String[]{});
     private static List<String> mypost_contentArray = Arrays.asList(new String[]{});
-
-
-
 
     public String getName() {
         return username;
@@ -56,9 +52,6 @@ public class CommunityMSG implements Serializable {
 
     public static void setRm_contentArray(List<String> rm_contentArray) {
         CommunityMSG.rm_contentArray = rm_contentArray;
-    }
-    public static void setMypost_usernameArray(ArrayList<String> username) {
-        CommunityMSG.mypost_usernameArray = username;
     }
     public static void setMypost_timeArray(List<String> mypost_timeArray) {
         CommunityMSG.mypost_timeArray = mypost_timeArray;

@@ -5,8 +5,6 @@
     android:id="@+id/community_remarks"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -30,7 +28,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"/>
+                android:layout_marginRight="8dp" />
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     </LinearLayout>
     <EditText
@@ -39,12 +37,10 @@
         android:inputType="text"
         android:focusable="false"
         android:focusableInTouchMode="false"
-        android:background="#FFFFFF"
         android:layout_width="match_parent"
         android:layout_height="35dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
+        android:background="#FFFFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"/>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

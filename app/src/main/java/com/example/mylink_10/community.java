@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -42,7 +41,7 @@ import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link community#newInstance} factory method to
+ * Use the {@link community#} factory method to
  * create an instance of this fragment.
  */
 public class community extends Fragment implements AdapterView.OnItemClickListener {
@@ -56,12 +55,6 @@ public class community extends Fragment implements AdapterView.OnItemClickListen
     public community() {
         // Required empty public constructor
     }
-    public static community newInstance() {
-        community fragment = new community();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -74,13 +67,13 @@ public class community extends Fragment implements AdapterView.OnItemClickListen
         super.onViewCreated(view, savedInstanceState);
 
         refresh_community = view.findViewById(R.id.refresh_community);
-        refresh_community.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                // 执行刷新操作
-                RefrashDate();
+        refresh_community.setOnRefreshListener(() -> {
+            // 执行刷新操作
+            RefrashDate();
+            new Handler().postDelayed(() -> {
+                // 更新完数据后，结束下拉刷新
                 refresh_community.setRefreshing(false);
-            }
+            }, 1000);
         });
     }
     @Override
@@ -94,15 +87,12 @@ public class community extends Fragment implements AdapterView.OnItemClickListen
         // 初始化按钮
         bt_menu = view.findViewById(R.id.bt_menu);
         // 设置按钮点击事件
-        bt_menu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 创建Intent对象，指定要跳转的目标Activity
-                Intent intent = new Intent(getActivity(), PostTextActivity.class);
-                updateUsername();
-                //启动菜单
-                showPopupMenu();
-            }
+        bt_menu.setOnClickListener(v -> {
+            // 创建Intent对象，指定要跳转的目标Activity
+            Intent intent = new Intent(getActivity(), PostTextActivity.class);
+            updateUsername();
+            //启动菜单
+            showPopupMenu();
         });
         return view;
     }
@@ -115,25 +105,22 @@ public class community extends Fragment implements AdapterView.OnItemClickListen
     private void showPopupMenu() {
         PopupMenu popupMenu = new PopupMenu(getActivity(), bt_menu);
         popupMenu.getMenuInflater().inflate(R.menu.community_selection, popupMenu.getMenu());
-        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                if(!username.isEmpty())
-                {
-                    switch (item.getItemId()) {
-                        case R.id.option1:
-                            openNewActivity1();
-                            return true;
-                        case R.id.option2:
-                            openNewActivity2();
-                            return true;
-                        default:
-                            return false;
-                    }
-                }else{
-                    Toast.makeText(parentActicity, "您还未登录，登录后开放此功能", Toast.LENGTH_SHORT).show();
-                    return false;
+        popupMenu.setOnMenuItemClickListener(item -> {
+            if(!username.isEmpty())
+            {
+                switch (item.getItemId()) {
+                    case R.id.option1:
+                        openNewActivity1();
+                        return true;
+                    case R.id.option2:
+                        openNewActivity2();
+                        return true;
+                    default:
+                        return false;
                 }
+            }else{
+                Toast.makeText(parentActicity, "您还未登录，登录后开放此功能", Toast.LENGTH_SHORT).show();
+                return false;
             }
         });
         popupMenu.show();
@@ -185,12 +172,7 @@ public class community extends Fragment implements AdapterView.OnItemClickListen
                 } else {
                     // 处理请求错误
                     String error = responseJson.optString("error");
-                    parentActicity.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(parentActicity, "请求错误：" + error, Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                    parentActicity.runOnUiThread(() -> Toast.makeText(parentActicity, "请求错误：" + error, Toast.LENGTH_SHORT).show());
                 }
             }
         } catch (IOException e) {
@@ -203,17 +185,19 @@ public class community extends Fragment implements AdapterView.OnItemClickListen
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        refresh_community.setRefreshing(true);
         username = getValuesUtil.getStrValue(parentActicity,"username");
         Log.d("community",username);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                RefrashDate();
-                // 刷新完成后，结束下拉刷新
-                refresh_community.setRefreshing(false);
-            }
-        }, 0);
+        RefrashDate();
+    }
+
+    public void onResume() {
+        super.onResume();
+        RefrashDate();
+        refresh_community.setRefreshing(true);
+        new Handler().postDelayed(() -> {
+            // 刷新完成后，结束下拉刷新
+            refresh_community.setRefreshing(false);
+        }, 1000);
     }
 
     @Override
@@ -224,12 +208,7 @@ public class community extends Fragment implements AdapterView.OnItemClickListen
     }
     private void RefrashDate()
     {
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run(){
-                GetAllMassage();
-            }
-        });
+        Thread thread = new Thread(() -> GetAllMassage());
         thread.start();
         try {
             Thread.sleep(500);

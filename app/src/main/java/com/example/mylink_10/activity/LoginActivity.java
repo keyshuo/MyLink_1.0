@@ -61,8 +61,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 ToastUtil.show(this, "密码长度过短或过长，请检查后重新输入！");
             } else {
                 User user = new User();
-                user.setAccount("614481987");
-                user.setPassword("wx15015990723");
+                user.setAccount(account);
+                user.setPassword(password);
                 //将user转换为json字符串
                 userJson = new GsonBuilder().disableHtmlEscaping().create().toJson(user);
                 new HttpRequestTask().execute();

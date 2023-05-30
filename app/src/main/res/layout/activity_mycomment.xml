@@ -46,6 +46,7 @@
             android:layout_marginRight="2dp"
             android:divider="@null"
             android:dividerHeight="2dp"
+            android:background="#FFFFFF"
             android:listSelector="@color/cm_item_transparent" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

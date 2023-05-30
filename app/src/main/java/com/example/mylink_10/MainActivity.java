@@ -46,9 +46,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Bundle mBundle = new Bundle();
         initView(mBundle);
-        player = MediaPlayerSingleton.getInstance(this, R.raw.bgm3);
+        player = MediaPlayerSingleton.getInstance(this, R.raw.bgm1);
         player.start();
-//        sharedPreferences = getSharedPreferences("option-config", Context.MODE_PRIVATE);
         String username = getValuesUtil.getStrValue(this, "username");
         String token = getValuesUtil.getStrValue(this, "token");
         Log.d("username", username);

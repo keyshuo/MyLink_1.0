@@ -1,5 +1,6 @@
 package com.example.mylink_10.activity;
 
+import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,7 +11,10 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mylink_10.R;
+import com.example.mylink_10.pojo.AddressUrl;
 import com.example.mylink_10.pojo.RankingResult;
+import com.example.mylink_10.pojo.ScorePojo;
+import com.example.mylink_10.util.getValuesUtil;
 import com.google.gson.Gson;
 
 import java.io.BufferedReader;
@@ -19,20 +23,34 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Arrays;
+import java.util.List;
 
 public class RankingActivity extends AppCompatActivity {
 
-    private String[] ranking = {};
+    private List<ScorePojo> data;
+    private String[] strings = {};
+    private ListView lv_ranking;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ranking);
         new HttpRequestTask().execute();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        String[] ss = Arrays.toString(data.toArray()).replace("[", "")
+                .replace("]", "")
+                .split(",");
+        strings = ss.clone();
+        Log.d("strings", Arrays.toString(strings));
         //ListView相关
-        ArrayAdapter rankingAdapter = new ArrayAdapter(this,R.layout.item_selector,ranking);
-        ListView lv_ranking = findViewById(R.id.lv_ranking);
-        lv_ranking.setAdapter(rankingAdapter);
+        lv_ranking = findViewById(R.id.lv_ranking);
+        lv_ranking.setAdapter(new ArrayAdapter(this, R.layout.item_selector, strings));
     }
 
     private class HttpRequestTask extends AsyncTask<Void, Void, String> {
@@ -40,7 +58,19 @@ public class RankingActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(Void... voids) {
             try {
-                URL url = new URL("http://1.15.76.132:8080/rank/my/getRankLow");
+                URL url = new URL(AddressUrl.url + "/rank/my/getRankLow");
+                switch (getValuesUtil.getIntValue(RankingActivity.this,"dif")) {
+                    case 0:
+                        url = new URL(AddressUrl.url + "/rank/my/getRankLow");
+                        break;
+                    case 1:
+                        url = new URL(AddressUrl.url + "/rank/my/getRankMedium");
+                        break;
+                    case 2:
+                        url = new URL(AddressUrl.url + "/rank/my/getRankHigh");
+                        break;
+                }
+
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
 
@@ -57,8 +87,8 @@ public class RankingActivity extends AppCompatActivity {
                     String res = response.toString();
                     Gson mGson = new Gson();
                     RankingResult rankingResult = mGson.fromJson(res, RankingResult.class);
-//                    data = mGson.fromJson(rankingResult.getData(), ScorePojo.class);
-                    Log.d("RankingResult",rankingResult.toString());
+                    data = rankingResult.getData();
+                    Log.d("RankingResult", Arrays.toString(strings));
                     return "数据获取成功";
                 } else {
 //                    return "GET request failed. Response Code: " + responseCode;

@@ -12,4 +12,11 @@ public class getValuesUtil {
     public static String getStrValue(Context context,String valueName) {
        return context.getSharedPreferences("option-config",Context.MODE_PRIVATE).getString(valueName,"");
     }
+    public static int getIntValue(Context context,String valueName) {
+       return context.getSharedPreferences("option-config",Context.MODE_PRIVATE).getInt(valueName,0);
+    }
+
+    public static boolean getBooValue(Context context,String valueName) {
+        return context.getSharedPreferences("option-config",Context.MODE_PRIVATE).getBoolean(valueName,false);
+    }
 }

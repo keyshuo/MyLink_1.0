@@ -35,7 +35,7 @@ public class MyCommentActivity extends AppCompatActivity implements AdapterView.
     ListView lv_mypost;
     SwipeRefreshLayout refresh_mypost;
     List<CommunityMSG> MSGList;
-    CommunityMSG ownerMSG;
+    MyCommunityAdapter.RefreshListView refreshListView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,24 +47,65 @@ public class MyCommentActivity extends AppCompatActivity implements AdapterView.
         lv_mypost = findViewById(R.id.lv_mypost);
         lv_mypost.setOnItemClickListener( MyCommentActivity.this);
         refresh_mypost = findViewById(R.id.refresh_mypost);
-        refresh_mypost.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                RefrashDate();
+        refresh_mypost.setOnRefreshListener(() -> {
+            RefrashDate();
+            new Handler().postDelayed(() -> {
+                // 更新完数据后，结束下拉刷新
                 refresh_mypost.setRefreshing(false);
-            }
+            }, 1000);
         });
-        refresh_mypost.setRefreshing(true);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                RefrashDate();
-                // 刷新完成后，结束下拉刷新
+        //创建删除操作函数调用接口
+        refreshListView = position -> {
+            //Log.d("MyCommentActivity","跳转到这个activity");
+            // 删除数据
+            DeleteDate(MSGList.get(position).getTime());
+            Log.d("DeleteMSGList", MSGList.get(position).getTime());
+            // 更新显示
+            RefrashDate();
+            refresh_mypost.setRefreshing(true);
+            new Handler().postDelayed(() -> {
+                // 更新完数据后，结束下拉刷新
                 refresh_mypost.setRefreshing(false);
-            }
-        }, 0);
-    }
+            }, 1000);
+        };
+        //第一次点页面自动刷新数据
+        RefrashDate();
+        refresh_mypost.setRefreshing(true);
+        new Handler().postDelayed(() -> {
+            // 刷新完成后，结束下拉刷新
+            refresh_mypost.setRefreshing(false);
+        }, 1000);
 
+    }
+    private void DeleteDate(String datetime)
+    {
+        Thread thread = new Thread(() -> DeleteComment(datetime));
+        thread.start();
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    private boolean DeleteComment(String datetime)
+    {
+        boolean isSuccess = false;
+        try {
+            URL url = new URL("http://1.15.76.132:8080/comment/my/deleteCommentIndex?time="+datetime);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            String token = getValuesUtil.getStrValue(this,"token");
+            connection.setRequestProperty("Authorization",token);
+            int responseCode = connection.getResponseCode();
+            //Log.d("DeleteComment", String.valueOf(responseCode));
+            if (responseCode == HttpURLConnection.HTTP_OK)  {
+                //Log.d("DeleteComment ","success");
+                isSuccess = true;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return isSuccess;
+    }
     private void RefrashDate()
     {
         Thread thread = new Thread(() -> GetAllMyComments());
@@ -75,9 +116,9 @@ public class MyCommentActivity extends AppCompatActivity implements AdapterView.
             throw new RuntimeException(e);
         }
         MSGList = CommunityMSG.getMyDefaultList(tv_username.getText().toString());
-        //Log.d("RefrashDate", String.valueOf(MSGList.size()));
+        Log.d("RefrashDate", String.valueOf(MSGList.size()));
         //构建适配器
-        lv_mypost.setAdapter(new CommunityBaseAdapter(MyCommentActivity.this,MSGList));
+        lv_mypost.setAdapter(new MyCommunityAdapter(MyCommentActivity.this,MSGList,refreshListView));
 
     }
     private void GetAllMyComments()
@@ -104,7 +145,7 @@ public class MyCommentActivity extends AppCompatActivity implements AdapterView.
                 int code = responseJson.getInt("code");
 
                 if (code == 200) {
-                    Log.d("GetAllMyComments code", String.valueOf(code));
+                    //Log.d("GetAllMyComments code", String.valueOf(code));
                     // 解析服务器响应中的音乐列表
                     JSONArray MSGArray = responseJson.getJSONArray("data");
                     //Log.d("GetAllMyComments MSGArray",MSGArray.toString());

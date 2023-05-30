@@ -24,6 +24,9 @@ import com.example.mylink_10.R;
 import com.example.mylink_10.gameRelated.Game;
 import com.example.mylink_10.gameRelated.GameConf;
 import com.example.mylink_10.gameRelated.GameView;
+import com.example.mylink_10.pojo.AddressUrl;
+import com.example.mylink_10.util.DateFormatUtil;
+import com.example.mylink_10.util.ToastUtil;
 import com.example.mylink_10.util.getValuesUtil;
 
 import java.io.IOException;
@@ -46,7 +49,7 @@ public class XiuxianActivity extends AppCompatActivity {
     private Handler handler = new Handler(Looper.myLooper()) {
         @Override
         public void handleMessage(@NonNull Message msg) {
-            if(msg.what == 0x666) {
+            if (msg.what == 0x666) {
                 tim += 100;
                 num.setText("用时: " + getTimeStr());
             }
@@ -58,9 +61,13 @@ public class XiuxianActivity extends AppCompatActivity {
             Log.i("receiver", "ok");
             stopTimer();
             win.setMessage("用时" + getTimeStr());
-            Log.i("checktime", getNow());
             win.show();
-            new HttpRequestTask().execute();
+            String token = getValuesUtil.getStrValue(XiuxianActivity.this, "token");
+            if ("".equals(token)) {
+                ToastUtil.show(XiuxianActivity.this, "还没有登录，无法进行分数上传，请登录以获取更多体验");
+            } else {
+                new HttpRequestTask().execute();
+            }
         }
     };
 
@@ -91,7 +98,7 @@ public class XiuxianActivity extends AppCompatActivity {
 
     private void startTimer() {
         stopTimer();
-        if(timer == null) {
+        if (timer == null) {
             timer = new Timer();
             timer.schedule(new TimerTask() {
                 @Override
@@ -103,7 +110,7 @@ public class XiuxianActivity extends AppCompatActivity {
     }
 
     private void stopTimer() {
-        if(timer != null) {
+        if (timer != null) {
             timer.cancel();
             timer = null;
         }
@@ -126,24 +133,24 @@ public class XiuxianActivity extends AppCompatActivity {
         gameView.start(game, false);
         // et = new EditText(getApplicationContext());
         win = new AlertDialog.Builder(this).setTitle("完成!").setIcon(R.drawable.success)
-                        .setNeutralButton("返回", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                finish();
-                            }
-                        })
-                        .setPositiveButton("再来一次", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                start();
-                            }
-                        }).setCancelable(false);
+                .setNeutralButton("返回", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                })
+                .setPositiveButton("再来一次", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        start();
+                    }
+                }).setCancelable(false);
         start();
         setBroadcast();
     }
 
     private String getTimeStr() {
-        String ret = Float.toString((float)(1.0 * tim / 1000));
+        String ret = Float.toString((float) (1.0 * tim / 1000));
         int dian = ret.indexOf(".");
         String s1 = ret.substring(0, dian);
         String s2 = ret.substring(dian, dian + 2);
@@ -156,20 +163,32 @@ public class XiuxianActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(Void... voids) {
             try {
-                URL url = new URL("http://1.15.76.132:8080/login");
+                URL url = new URL(AddressUrl.url + "/my/rank/createRank?date=" + DateFormatUtil.getTime() + "&time=" + getTimeStr());
+                int selection = getValuesUtil.getIntValue(XiuxianActivity.this, "dif");
+                switch (selection) {
+                    case 0:
+                        url = new URL(AddressUrl.url + "/my/rank/createRankLow?date=" + DateFormatUtil.getTime() + "&time=" + getTimeStr() + "s");
+                        break;
+                    case 1:
+                        url = new URL(AddressUrl.url + "/my/rank/createRankMedium?date=" + DateFormatUtil.getTime() + "&time=" + getTimeStr() + "s");
+                        break;
+                    case 2:
+                        url = new URL(AddressUrl.url + "/my/rank/createRankHigh?date=" + DateFormatUtil.getTime() + "&time=" + getTimeStr() + "s");
+                        break;
+                }
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
                 //允许输出并写入数据
-                connection.setDoOutput(true);
-                connection.setDoInput(true);
-                connection.addRequestProperty("Authorization", getValuesUtil.getStrValue(XiuxianActivity.this,"token"));
+//                connection.setDoOutput(true);
+//                connection.setDoInput(true);
+                connection.addRequestProperty("Authorization", getValuesUtil.getStrValue(XiuxianActivity.this, "token"));
 
                 int responseCode = connection.getResponseCode();
                 if (responseCode == HttpURLConnection.HTTP_OK) {
                     return "记录上传成功";
                 } else {
-//                    return "GET request failed. Response Code: " + responseCode;
-                    return "记录上传失败，请检查网络后重试";
+                    return "GET request failed. Response Code: " + responseCode;
+//                    return "记录上传失败，请检查网络后重试";
                 }
             } catch (IOException e) {
                 e.printStackTrace();

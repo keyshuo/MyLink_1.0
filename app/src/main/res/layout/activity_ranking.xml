@@ -7,11 +7,19 @@
     android:background="@drawable/background1"
     tools:context=".activity.RankingActivity">
 
+    <TextView
+        android:id="@+id/tv_ranking"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="可通过主页难度选择来查看不同难度下的排行榜"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textAlignment="center"/>
+
     <ListView
         android:id="@+id/lv_ranking"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_ranking"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 

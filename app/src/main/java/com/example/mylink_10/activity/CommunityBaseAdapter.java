@@ -61,15 +61,12 @@ public class CommunityBaseAdapter extends BaseAdapter {
         holder.tv_msg.setText(cmmsg.getMsg());
         holder.tv_name.setText(cmmsg.getName());
         holder.tv_time.setText(cmmsg.getTime());
-        holder.btn_comments.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //ToastUtil.show(mContext,"按钮被点击"+cmmsg.getName());
-                Intent intent = new Intent(mContext, CommunityRemarksActivity.class);
-                //intent.putExtra("item", (CharSequence) cmmsg);
-                intent.putExtra("CommunityMSG", mMSGList.get(position));
-                mContext.startActivity(intent);
-            }
+        holder.btn_comments.setOnClickListener(v -> {
+            //ToastUtil.show(mContext,"按钮被点击"+cmmsg.getName());
+            Intent intent = new Intent(mContext, CommunityRemarksActivity.class);
+            //intent.putExtra("item", (CharSequence) cmmsg);
+            intent.putExtra("CommunityMSG", mMSGList.get(position));
+            mContext.startActivity(intent);
         });
         return convertView;
     }

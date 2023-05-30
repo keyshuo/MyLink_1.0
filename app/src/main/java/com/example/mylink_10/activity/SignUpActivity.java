@@ -11,8 +11,10 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mylink_10.R;
+import com.example.mylink_10.pojo.Result;
 import com.example.mylink_10.pojo.User;
 import com.example.mylink_10.util.ToastUtil;
+import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.io.BufferedReader;
@@ -72,6 +74,12 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 userJson = new GsonBuilder().disableHtmlEscaping().create().toJson(user);
                 Log.d("JSON",userJson);
                 new HttpRequestTask().execute();
+//                try {
+//                    Thread.sleep(1000);
+//                } catch (InterruptedException e) {
+//                    throw new RuntimeException(e);
+//                }
+//                finish();
             }
         }
     }
@@ -94,22 +102,24 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 osw.close();
 
                 int responseCode = connection.getResponseCode();
+                InputStream inputStream = connection.getInputStream();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+                StringBuilder response = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    response.append(line);
+                }
+                reader.close();
+                Gson mGson = new Gson();
+                Result result = mGson.fromJson(response.toString(), Result.class);
                 if (responseCode == HttpURLConnection.HTTP_OK) {
-                    InputStream inputStream = connection.getInputStream();
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-                    StringBuilder response = new StringBuilder();
-                    String line;
-                    while ((line = reader.readLine()) != null) {
-                        response.append(line);
-                    }
-                    reader.close();
-                    return response.toString();
+                    return "注册成功";
                 } else {
-                    return "GET request failed. Response Code: " + responseCode;
+                    return "注册失败，该账号已被注册或检查网络设置";
                 }
             } catch (IOException e) {
                 e.printStackTrace();
-                return "Error: " + e.getMessage();
+                return "注册失败，该账号已被注册或检查网络设置";
             }
         }
 
@@ -117,6 +127,9 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         protected void onPostExecute(String result) {
             // 处理网络请求的结果
             Toast.makeText(SignUpActivity.this, result, Toast.LENGTH_SHORT).show();
+            if ("注册成功".equals(result)) {
+                finish();
+            }
         }
     }
 }
