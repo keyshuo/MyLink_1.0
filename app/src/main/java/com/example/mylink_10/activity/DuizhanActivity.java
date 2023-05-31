@@ -201,6 +201,7 @@ public class DuizhanActivity extends AppCompatActivity {
                 Intent intent = new Intent(DuizhanActivity.this, ModeSelectionActivity.class);
                 webSocketClient.close();
                 startActivity(intent);
+                finish();
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
@@ -311,7 +312,7 @@ public class DuizhanActivity extends AppCompatActivity {
                                 thread.start();
                                 Intent intent = new Intent(DuizhanActivity.this, ModeSelectionActivity.class);
                                 startActivity(intent);
-                                //finish();
+                                finish();
                             });
                             builder.setCancelable(false);
 

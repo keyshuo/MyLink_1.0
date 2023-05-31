@@ -22,7 +22,7 @@
         android:layout_height="40dp"
         android:layout_marginTop="70dp"
         android:background="@drawable/text_shape"
-        android:hint="输入账号，即11为手机号"
+        android:hint="请输入账号"
         android:maxLength="11"
         android:textAlignment="center"
         />

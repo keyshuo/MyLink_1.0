@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Bundle mBundle = new Bundle();
         initView(mBundle);
-        player = MediaPlayerSingleton.getInstance(this, R.raw.bgm1);
+        player = MediaPlayerSingleton.getInstance(this,R.raw.bgm1);
         player.start();
         String username = getValuesUtil.getStrValue(this, "username");
         String token = getValuesUtil.getStrValue(this, "token");
@@ -147,6 +147,7 @@ public class MainActivity extends AppCompatActivity {
         player.pause();
         super.onDestroy();
     }
+
 
     @Override
     protected void onRestart() {

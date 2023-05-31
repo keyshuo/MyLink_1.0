@@ -53,10 +53,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (emptyCondition) {
             ToastUtil.show(this, "请将所有信息填写完全！");
         } else {
-            if (account.length() < 11) {
-                ToastUtil.show(this, "账号长度不足，请检查后重新输入！");
-                return;
-            }
             if (password.length() < 6 || password.length() > 16) {
                 ToastUtil.show(this, "密码长度过短或过长，请检查后重新输入！");
             } else {

@@ -44,9 +44,7 @@ public class MusicActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_music);
 
-        if (!MediaPlayerSingleton.isIsplay()) {
-            mediaPlayer = MediaPlayerSingleton.getInstance(this, R.raw.bgm1);
-        }
+        mediaPlayer = MediaPlayerSingleton.getInstance(this,R.raw.bgm1);
 
         new GetMusicListTask().execute();
         musicListView = findViewById(R.id.musicListView);
@@ -237,6 +235,7 @@ public class MusicActivity extends AppCompatActivity {
                 mediaPlayer.setDataSource(musicFile.getAbsolutePath());
 
                 mediaPlayer.prepare();
+//                mediaPlayer.setLooping(true);
 
                 mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                     @Override

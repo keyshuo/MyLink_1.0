@@ -163,17 +163,18 @@ public class XiuxianActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(Void... voids) {
             try {
-                URL url = new URL(AddressUrl.url + "/my/rank/createRank?date=" + DateFormatUtil.getTime() + "&time=" + getTimeStr());
+                URL url = new URL(AddressUrl.url + "/my/rank/createRankLow?date=" + DateFormatUtil.getTime() + "&time=" + getTimeStr());
                 int selection = getValuesUtil.getIntValue(XiuxianActivity.this, "dif");
+                Log.d("Time:",getTimeStr());
                 switch (selection) {
                     case 0:
-                        url = new URL(AddressUrl.url + "/my/rank/createRankLow?date=" + DateFormatUtil.getTime() + "&time=" + getTimeStr() + "s");
+                        url = new URL(AddressUrl.url + "/rank/my/createRankLow?date=" + DateFormatUtil.getTime() + "&time=" + getTimeStr());
                         break;
                     case 1:
-                        url = new URL(AddressUrl.url + "/my/rank/createRankMedium?date=" + DateFormatUtil.getTime() + "&time=" + getTimeStr() + "s");
+                        url = new URL(AddressUrl.url + "/rank/my/createRankMedium?date=" + DateFormatUtil.getTime() + "&time=" + getTimeStr());
                         break;
                     case 2:
-                        url = new URL(AddressUrl.url + "/my/rank/createRankHigh?date=" + DateFormatUtil.getTime() + "&time=" + getTimeStr() + "s");
+                        url = new URL(AddressUrl.url + "/rank/my/createRankHigh?date=" + DateFormatUtil.getTime() + "&time=" + getTimeStr());
                         break;
                 }
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -186,9 +187,11 @@ public class XiuxianActivity extends AppCompatActivity {
                 int responseCode = connection.getResponseCode();
                 if (responseCode == HttpURLConnection.HTTP_OK) {
                     return "记录上传成功";
+                } else if (responseCode == HttpURLConnection.HTTP_INTERNAL_ERROR) {
+                    return "登录超时，请重新登录后再试";
                 } else {
-                    return "GET request failed. Response Code: " + responseCode;
-//                    return "记录上传失败，请检查网络后重试";
+//                    return "GET request failed. Response Code: " + responseCode;
+                    return "记录上传失败，请检查网络后重试";
                 }
             } catch (IOException e) {
                 e.printStackTrace();
