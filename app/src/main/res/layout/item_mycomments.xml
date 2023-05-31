@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:layout_margin="10dp"
+    android:descendantFocusability="blocksDescendants">
+    <ImageView
+        android:id="@+id/mycm_ico"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/cm_default_headshot" />
+    <TextView
+        android:id="@+id/mycm_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@id/mycm_ico"
+        android:text="name"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#FF82AB" />
+
+    <Button
+        android:id="@+id/mycm_btn_remarks"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/cm_comments" />
+    <Button
+        android:id="@+id/mycm_btn_del"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_below="@id/mycm_btn_remarks"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="70dp"
+        android:background="@drawable/btn_del" />
+
+    <TextView
+        android:id="@+id/mycm_content"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/mycm_name"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@id/mycm_ico"
+        android:minLines="3"
+        android:text="内容" />
+
+    <TextView
+        android:id="@+id/mycm_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/mycm_content"
+        android:layout_marginTop="3dp"
+        android:layout_toRightOf="@id/mycm_ico"
+        android:text="time"
+        android:textColor="#9A9A9A" />
+</RelativeLayout>
