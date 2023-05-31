@@ -35,7 +35,7 @@ import java.util.TimerTask;
 public class NewGameActivity extends AppCompatActivity {
     private AlertDialog.Builder win, lost, over;
     private EditText et;
-    private final int[] finalTime = {240000, 2100000, 180000};
+    private final int[] finalTime = {240000, 210000, 180000};
     private final int step = 45000;
     private int pos = 0;
     private GameView gameView;

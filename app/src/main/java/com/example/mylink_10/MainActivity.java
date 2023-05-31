@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
         }
         TextView t = findViewById(R.id.tv_test);
         textSize = t.getTextSize();
-//        Log.d("SIZE", String.valueOf(t.getTextSize()));
+        Log.d("SIZE", String.valueOf(t.getTextSize()));
     }
 
     private void initView(Bundle mBundle) {
@@ -167,12 +167,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onRestart() {
         themeType = getValuesUtil.getIntValue(this,"themeType");
         if (themeType == 0) {                           //读取为亮色主题时
-            if (textSize!=37){  //发现不为亮色主题时
+            if (textSize!=39){  //发现不为亮色主题时
                 recreate();
             }
         }
         if (themeType == 1) {
-            if (textSize!=39) {//读取为暗色主题时
+            if (textSize!=41) {//读取为暗色主题时
                 recreate();                             //发现不为暗色主题时
             }
         }
