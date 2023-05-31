@@ -23,7 +23,6 @@ import com.example.mylink_10.R;
 import com.example.mylink_10.gameRelated.Game;
 import com.example.mylink_10.gameRelated.GameConf;
 import com.example.mylink_10.gameRelated.GameView;
-import com.example.mylink_10.util.DateFormatUtil;
 import com.example.mylink_10.util.ThemeUtil;
 import com.example.mylink_10.util.getValuesUtil;
 
@@ -81,6 +80,7 @@ public class NewGameActivity extends AppCompatActivity {
             }
         }
     };
+    private SharedPreferences sp;
 
     private void setBroadcast() { // 注册广播接收器，它接收GameView里发出的游戏胜利信息
         IntentFilter intentFilter = new IntentFilter("action_win");
@@ -134,17 +134,22 @@ public class NewGameActivity extends AppCompatActivity {
         if (cnt == null) {
             cnt = findViewById(R.id.cnt);
         }
-        SharedPreferences sp = getSharedPreferences("record", Context.MODE_PRIVATE);
-        String s = "username" + GameConf.n;
+        //全局的shared preference，用于写入记录
+        sp = getSharedPreferences("record", Context.MODE_PRIVATE);
+        String username = getValuesUtil.getStrValue(this, "username");
+        String s = username + " " + GameConf.n;
         int count = sp.getInt(s, 0);
+        Log.d("SSSSS",s);
+        Log.d("COUNT", String.valueOf(count));
         cnt.setText("最佳纪录: " + count + "关");
     }
 
     private void updateRecord(int count) {
-        SharedPreferences sp = getSharedPreferences("option-config", Context.MODE_PRIVATE);
+//        SharedPreferences sp = getSharedPreferences("option-config", Context.MODE_PRIVATE);
+        //获取文件编辑对象
         SharedPreferences.Editor spEditor = sp.edit();
         String username = getValuesUtil.getStrValue(this, "username");
-        String s = username + " " + GameConf.n + " " + DateFormatUtil.getTime();
+        String s = username + " " + GameConf.n;
         if (count > sp.getInt(s, 0)) {
             spEditor.putInt(s, count);
             spEditor.commit();
