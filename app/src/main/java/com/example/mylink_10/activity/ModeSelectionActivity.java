@@ -26,6 +26,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Random;
 
 public class ModeSelectionActivity extends AppCompatActivity implements View.OnClickListener {
     public String ip = "1.15.76.132:8080";
@@ -33,6 +34,8 @@ public class ModeSelectionActivity extends AppCompatActivity implements View.OnC
     private Competition competition;
     private boolean flag = false;
     AlertDialog dialog;
+
+    public int qiPan;
 
     public static class Competition {
         public int sign;
@@ -72,6 +75,7 @@ public class ModeSelectionActivity extends AppCompatActivity implements View.OnC
             case R.id.btn_standalone:
                 intent = new Intent(this, XiuxianActivity.class);
                 startActivity(intent);
+//                finish();
                 break;
             case R.id.btn_online:
                 new JoinCompetition().execute();
@@ -95,9 +99,11 @@ public class ModeSelectionActivity extends AppCompatActivity implements View.OnC
         @Override
         protected Boolean doInBackground(String... params) {
             try {
+                Random random = new Random();
+                qiPan = random.nextInt(100);
                 //这里的username和棋盘号写死了，
                 //后续需要登陆后获取username，并且随机一个棋盘号
-                String joinUrl = "http://" + ip + "/competition/my/joinCompetition?checkerboard=1";
+                String joinUrl = "http://" + ip + "/competition/my/joinCompetition?checkerboard="+qiPan;
                 URL url = new URL(joinUrl);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestProperty("Authorization", token);
@@ -125,7 +131,7 @@ public class ModeSelectionActivity extends AppCompatActivity implements View.OnC
                             intent.putExtra("competition", competitionJson);
 //                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intent);
-//                            finish();
+                            finish();
                         } else {
                             joinUrl = "http://" + ip + "/competition/my/OpponentFound?sign=" + competition.sign;
                             url = new URL(joinUrl);

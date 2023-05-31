@@ -148,17 +148,10 @@ public class Game {
 
 package com.example.mylink_10.gameRelated;
 
-import android.app.GameManager;
 import android.graphics.Point;
-import android.util.Log;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
-import java.util.Random;
-import java.util.Scanner;
 
 public class Game {
     private Board b;
@@ -175,6 +168,17 @@ public class Game {
         b = new Board();
         b.setBoard2();
     }
+
+    public void startNewGame2() { // Game类里新加的
+        b = new Board();
+        b.setBoard3();
+    }
+
+    public void startNewGame3(int id) { // Game类里新加的
+        b = new Board();
+        b.setBoard4(id);
+    }
+
 
     public Board getBoard() {
         return b;

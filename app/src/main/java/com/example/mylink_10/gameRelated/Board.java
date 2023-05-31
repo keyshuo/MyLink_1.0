@@ -58,8 +58,6 @@ public class Board {
 
 package com.example.mylink_10.gameRelated;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -68,6 +66,7 @@ public class Board {
     private List<Piece> pieces;
     private List<Integer> imageVals;
     private int tot;
+    private int sequenceId;
 
     public Board() {
         tot = GameConf.X * GameConf.Y;
@@ -75,6 +74,24 @@ public class Board {
         for(int i = 0; i < GameConf.X * GameConf.Y; i++) {
             pieces.add(new Piece(i % GameConf.X + 1, i / GameConf.X + 1));
         } // 新建piece的链表
+    }
+
+    public void setBoard3() { // Board类里新加
+        TempNode temp = ImageUtil.getCppRes2();
+        sequenceId = temp.getId();
+        imageVals = temp.getImages();
+        imageVals = ImageUtil.setSolvable(imageVals);
+        ImageUtil.attchImages(pieces, imageVals);
+        resetPos();
+        setStartPos();
+    }
+
+    public void setBoard4(int id) { // Board类里新加
+        imageVals = ImageUtil.getCppRes3(id);
+        imageVals = ImageUtil.setSolvable(imageVals);
+        ImageUtil.attchImages(pieces, imageVals);
+        resetPos();
+        setStartPos();
     }
 
     public void setImageVals(List<Integer> imageVals) {
@@ -105,12 +122,6 @@ public class Board {
         ImageUtil.attchImages(pieces, imageVals);
         resetPos();
         setStartPos();
-    }
-
-    public void setBoard3() {
-        imageVals = ImageUtil.selValues();
-        ImageUtil.attchImages(pieces, imageVals); // 选图+贴图
-        shuffleBoard();
     }
 
     public void setBoard() {
@@ -144,6 +155,14 @@ public class Board {
         for(int i = 0; i < pieces.size(); i++) {
             pieces.get(i).cancelDel();
         }
+    }
+
+    public int getSequenceId() {
+        return sequenceId;
+    }
+
+    public void setSequenceId(int id) {
+        sequenceId = id;
     }
 }
 

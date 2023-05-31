@@ -28,7 +28,7 @@
         android:id="@+id/sco"
         android:textSize="24dp"
         android:layout_marginRight="20dp"
-        android:text="对手分数: null" />
+        android:text="对手分数: 0分" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -38,7 +38,7 @@
         android:id="@+id/sco_mine"
         android:textSize="24dp"
         android:layout_marginRight="20dp"
-        android:text="我的分数: null" />
+        android:text="我的分数: 0分" />
 
     <com.example.mylink_10.gameRelated.GameView
         android:id="@+id/gv"

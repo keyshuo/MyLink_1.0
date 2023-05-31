@@ -73,14 +73,12 @@ import android.util.Log;
 import com.example.mylink_10.R;
 
 import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -134,6 +132,126 @@ public class ImageUtil {
         List<Integer> ret = new LinkedList<>();
         Random rand = new Random();
         int sel = rand.nextInt(txt.size());
+        Log.i("cpp", "sel = " + sel);
+        String s = txt.get(sel);
+        int now = 0;
+        for(int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if(c == ' ') {
+                ret.add(now);
+                now = 0;
+            } else {
+                now = now * 10 + c - (int)'0';
+            }
+        }
+        return ret;
+    }
+
+    public static TempNode getCppRes2() { // ImageUtil里新加
+        InputStream input;
+        if(GameConf.n == 0) {
+            input = GameConf.CONTEXT.getResources().openRawResource(R.raw.shenmidaima_0);
+        } else if(GameConf.n == 2) {
+            input = GameConf.CONTEXT.getResources().openRawResource(R.raw.shenmidaima_2);
+        } else {
+            input = GameConf.CONTEXT.getResources().openRawResource(R.raw.shenmidaima_1);
+        }
+        Reader reader = new InputStreamReader(input);
+        BufferedReader bufferedReader = new BufferedReader(reader); //缓冲流
+        String temp;
+        List<String> txt = new LinkedList<>();
+        try {
+            while ((temp = bufferedReader.readLine()) != null) {
+                txt.add(temp);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (input != null) {
+                try {
+                    input.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (bufferedReader != null) {
+                try {
+                    bufferedReader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        List<Integer> ret = new LinkedList<>();
+        Random rand = new Random();
+        int sel = rand.nextInt(txt.size());
+        Log.i("cpp", "sel = " + sel);
+        String s = txt.get(sel);
+        int now = 0;
+        for(int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if(c == ' ') {
+                ret.add(now);
+                now = 0;
+            } else {
+                now = now * 10 + c - (int)'0';
+            }
+        }
+        return new TempNode(sel, ret);
+    }
+
+    public static List<Integer> getCppRes3(int id) { // ImageUtil类里新加
+        InputStream input;
+        if(GameConf.n == 0) {
+            input = GameConf.CONTEXT.getResources().openRawResource(R.raw.shenmidaima_0);
+        } else if(GameConf.n == 2) {
+            input = GameConf.CONTEXT.getResources().openRawResource(R.raw.shenmidaima_2);
+        } else {
+            input = GameConf.CONTEXT.getResources().openRawResource(R.raw.shenmidaima_1);
+        }
+        Reader reader = new InputStreamReader(input);
+        BufferedReader bufferedReader = new BufferedReader(reader); //缓冲流
+        String temp;
+        List<String> txt = new LinkedList<>();
+        try {
+            while ((temp = bufferedReader.readLine()) != null) {
+                txt.add(temp);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (input != null) {
+                try {
+                    input.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (bufferedReader != null) {
+                try {
+                    bufferedReader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        List<Integer> ret = new LinkedList<>();
+        Random rand = new Random();
+        int sel = id;
         Log.i("cpp", "sel = " + sel);
         String s = txt.get(sel);
         int now = 0;

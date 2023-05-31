@@ -29,6 +29,21 @@ public class GameConf {
         update(dif); // 默认难度是普通（0， 1， 2）
     }
 
+
+    public static void init2(Activity a, Context context) { // GameConf类里新加
+        // 获取手机的信息，屏幕宽度高度等。。。
+        CONTEXT = context;
+        Display display = a.getWindowManager().getDefaultDisplay();
+        Point siz = new Point();
+        display.getSize(siz);
+        screenWidth = siz.x;
+        screenHeight = siz.y;
+        scale = context.getResources().getDisplayMetrics().density;
+        SharedPreferences sharedPreferences = context.getSharedPreferences("option-config", Context.MODE_PRIVATE);
+        int dif = 0;
+        update(dif); // 默认难度是普通（0， 1， 2）
+    }
+
     public static void update(int difficulty) {
         n = difficulty;
         setBoardSize(); // 设置行列数

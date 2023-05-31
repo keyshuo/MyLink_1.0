@@ -134,10 +134,13 @@ public class DuizhanActivity extends AppCompatActivity {
         LocalBroadcastManager.getInstance(getApplicationContext()).unregisterReceiver(broadcastReceiver2);
     }
 
-    private void start() {
-        System.out.println("start");
+
+    private void start() { // 替换DuizhanActivity中原有start()
         gameView.postInvalidate();
-        game.startNewGame();
+        game.startNewGame2();
+        tim = finalTime;
+        num = findViewById(R.id.num_duizhan);
+        startTimer();
     }
 
     private void startTimer() {
@@ -236,15 +239,22 @@ public class DuizhanActivity extends AppCompatActivity {
     /**
      * 游戏初始化
      */
-    private void init() {
-        System.out.println("init");
-        GameConf.init(this, getApplicationContext());
+    private void init() { // 替换DuazhanActivity中原有init()
+        GameConf.init2(this, getApplicationContext());
         game = new Game();
         gameView = findViewById(R.id.gv);
         gameView.start(game, true);
-        start();
         // et = new EditText(getApplicationContext());
+        start2(competition.checkerboard);
         setBroadcast();
+    }
+
+    private void start2(int id) { // DuizhanActivity里新加，按指定序列布置棋盘时使用
+        gameView.postInvalidate();
+        game.startNewGame3(id);
+        tim = finalTime;
+        num = findViewById(R.id.num_duizhan);
+        startTimer();
     }
 
     //准备游戏后才开始
