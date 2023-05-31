@@ -24,6 +24,7 @@ import com.example.mylink_10.gameRelated.Game;
 import com.example.mylink_10.gameRelated.GameConf;
 import com.example.mylink_10.gameRelated.GameView;
 import com.example.mylink_10.util.DateFormatUtil;
+import com.example.mylink_10.util.ThemeUtil;
 import com.example.mylink_10.util.getValuesUtil;
 
 import org.java_websocket.client.WebSocketClient;
@@ -123,6 +124,7 @@ public class NewGameActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ThemeUtil.setTheme(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_game);
         init();

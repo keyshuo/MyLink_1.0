@@ -19,6 +19,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.mylink_10.util.MediaPlayerSingleton;
+import com.example.mylink_10.util.ThemeUtil;
 import com.example.mylink_10.util.ToastUtil;
 import com.example.mylink_10.util.getValuesUtil;
 import com.google.android.material.tabs.TabLayout;
@@ -38,10 +39,18 @@ public class MainActivity extends AppCompatActivity {
     private myMessage ms;
     private final int[] titles = {R.string.tab_home, R.string.tab_community, R.string.tab_my};
     private final int[] images = {R.drawable.home, R.drawable.classify, R.drawable.me};
-
+    private int themeType;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+//        //获取之前选择的选项
+//        themeType = getValuesUtil.getIntValue(this,"themeType"); //第一次默认亮色主题
+//        if (themeType == 0) {
+//            setTheme(R.style.AppTheme);
+//        } else {
+//            setTheme(R.style.AppTheme2);
+//        }
+        ThemeUtil.setTheme(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Bundle mBundle = new Bundle();
@@ -151,6 +160,17 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onRestart() {
+        themeType = getValuesUtil.getIntValue(this,"themeType");
+        if (themeType == 0) {                           //读取为亮色主题时
+            if (!getTheme().equals(R.style.AppTheme)){  //发现不为亮色主题时
+                recreate();
+            }
+        }
+        if (themeType == 1) {
+            if (!getTheme().equals(R.style.AppTheme2)) {//读取为暗色主题时
+                recreate();                             //发现不为暗色主题时
+            }
+        }
         player.start();
         super.onRestart();
     }

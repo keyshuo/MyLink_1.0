@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.mylink_10.R;
+import com.example.mylink_10.util.ThemeUtil;
 import com.example.mylink_10.util.ToastUtil;
 import com.example.mylink_10.util.getValuesUtil;
 
@@ -38,6 +39,7 @@ public class MyCommentActivity extends AppCompatActivity implements AdapterView.
     MyCommunityAdapter.RefreshListView refreshListView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ThemeUtil.setTheme(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mycomment);
         tv_username = findViewById(R.id.tv_username);

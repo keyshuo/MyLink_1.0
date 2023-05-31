@@ -5,59 +5,47 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mylink_10.R;
+import com.example.mylink_10.util.getValuesUtil;
 
-public class OptionActivity extends AppCompatActivity implements View.OnClickListener {
+public class OptionActivity extends AppCompatActivity{
 
-    private static final Integer defOpt = 0;        //默认选项
     private SharedPreferences optionConfig;
-    private boolean mUseMyTheme;
     private SharedPreferences.Editor optEdit;
+    private int themeType;
 
     @SuppressLint({"MissingInflatedId"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
 
         //获取之前选择的选项
-        optionConfig = getSharedPreferences("option-config", Context.MODE_PRIVATE);
-        mUseMyTheme = optionConfig.getBoolean("mUseMyTheme",true); //第一次默认亮色主题
-        if (!mUseMyTheme) {
-            setTheme(R.style.NightTheme);//黑色主题
+        themeType = getValuesUtil.getIntValue(this,"themeType"); //第一次默认亮色主题
+        if (themeType == 0) {
+            setTheme(R.style.AppTheme);
         } else {
-            setTheme(R.style.LightTheme);//亮色主题
+            setTheme(R.style.AppTheme2);
         }
 
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_option);
+        optionConfig = getSharedPreferences("option-config", Context.MODE_PRIVATE);
 
         optEdit = optionConfig.edit();
-
+        Log.d("OPTHEME",String.valueOf(themeType));
         findViewById(R.id.btn_musicOpt).setOnClickListener(view -> {
             startActivity(new Intent(this, MusicActivity.class));
         });
 
         //background related
-        findViewById(R.id.btn_background).setOnClickListener(this);
-
-        reload();
-    }
-
-    @Override
-    public void onClick(View view) {
-        mUseMyTheme = !mUseMyTheme;//切换主题状态
-        recreate();//重启资源
-        optEdit.putBoolean("useMyTheme", mUseMyTheme);//存储主题更换状态
-        optEdit.commit();
-    }
-
-    /**
-     * 重载所有已选择选项
-     */
-    private void reload() {
-        mUseMyTheme = optionConfig.getBoolean("mUseMyTheme", true);
+        findViewById(R.id.btn_background).setOnClickListener(view -> {
+            themeType = themeType == 0 ? 1 : 0;
+            optEdit.putInt("themeType",themeType);
+            optEdit.commit();
+            recreate();
+        });
     }
 }

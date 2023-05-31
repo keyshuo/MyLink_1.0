@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.mylink_10.R;
 import com.example.mylink_10.pojo.Result;
 import com.example.mylink_10.pojo.User;
+import com.example.mylink_10.util.ThemeUtil;
 import com.example.mylink_10.util.ToastUtil;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -35,6 +36,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ThemeUtil.setTheme(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
         findViewById(R.id.btn_signup_sign).setOnClickListener(this);

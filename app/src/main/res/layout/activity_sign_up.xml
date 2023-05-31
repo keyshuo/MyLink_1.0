@@ -24,6 +24,7 @@
         android:layout_marginTop="100dp"
         android:background="@drawable/text_shape"
         android:hint="账号，即11位手机号码"
+        android:textColorHint="@color/black"
         android:maxLength="11"
         android:textAlignment="center" />
 
@@ -32,6 +33,7 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginTop="30dp"
+        android:textColorHint="@color/black"
         android:background="@drawable/text_shape"
         android:hint="用户名称"
         android:textAlignment="center" />
@@ -42,6 +44,7 @@
         android:layout_height="40dp"
         android:layout_marginTop="30dp"
         android:background="@drawable/text_shape"
+        android:textColorHint="@color/black"
         android:hint="请输入6~16位密码"
         android:inputType="textPassword"
         android:maxLength="16"
@@ -53,6 +56,7 @@
         android:layout_height="40dp"
         android:layout_marginTop="30dp"
         android:background="@drawable/text_shape"
+        android:textColorHint="@color/black"
         android:hint="再次输入密码"
         android:inputType="textPassword"
         android:maxLength="16"

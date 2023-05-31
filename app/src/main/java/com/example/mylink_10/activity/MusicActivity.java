@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mylink_10.R;
 import com.example.mylink_10.util.MediaPlayerSingleton;
+import com.example.mylink_10.util.ThemeUtil;
 import com.example.mylink_10.util.ToastUtil;
 
 import org.json.JSONArray;
@@ -41,6 +42,7 @@ public class MusicActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ThemeUtil.setTheme(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_music);
 

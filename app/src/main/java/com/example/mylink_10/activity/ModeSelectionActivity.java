@@ -14,6 +14,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mylink_10.R;
+import com.example.mylink_10.util.ThemeUtil;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
@@ -51,6 +52,7 @@ public class ModeSelectionActivity extends AppCompatActivity implements View.OnC
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ThemeUtil.setTheme(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mode_selection);
         findViewById(R.id.btn_standalone).setOnClickListener(this);

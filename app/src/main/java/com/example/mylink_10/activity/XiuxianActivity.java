@@ -26,6 +26,7 @@ import com.example.mylink_10.gameRelated.GameConf;
 import com.example.mylink_10.gameRelated.GameView;
 import com.example.mylink_10.pojo.AddressUrl;
 import com.example.mylink_10.util.DateFormatUtil;
+import com.example.mylink_10.util.ThemeUtil;
 import com.example.mylink_10.util.ToastUtil;
 import com.example.mylink_10.util.getValuesUtil;
 
@@ -118,6 +119,7 @@ public class XiuxianActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ThemeUtil.setTheme(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_xiuxian);
         init();

@@ -4,26 +4,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.OptionActivity"
+    android:background="?attr/bgNormalColor"
     android:orientation="vertical"
-    android:background="@drawable/background1">
+    tools:context=".activity.OptionActivity">
 
     <Button
         android:id="@+id/btn_musicOpt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/btn_shape"
         android:text="背景音乐切换"
         android:textAlignment="center"
-        android:background="@drawable/btn_shape"
-        android:layout_marginTop="50dp"
-        android:textColor="@color/black"/>
+        android:textColor="?attr/tvColor1" />
 
     <Button
         android:id="@+id/btn_background"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
         android:background="@drawable/btn_shape"
         android:text="点击切换主题"
-        android:layout_height="wrap_content"/>
+        android:textAlignment="center"
+        android:textColor="?attr/tvColor1" />
 
 
 </LinearLayout>

@@ -14,6 +14,7 @@ import com.example.mylink_10.R;
 import com.example.mylink_10.pojo.AddressUrl;
 import com.example.mylink_10.pojo.RankingResult;
 import com.example.mylink_10.pojo.ScorePojo;
+import com.example.mylink_10.util.ThemeUtil;
 import com.example.mylink_10.util.getValuesUtil;
 import com.google.gson.Gson;
 
@@ -35,6 +36,7 @@ public class RankingActivity extends AppCompatActivity {
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ThemeUtil.setTheme(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ranking);
         new HttpRequestTask().execute();

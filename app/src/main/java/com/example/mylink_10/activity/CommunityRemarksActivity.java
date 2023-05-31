@@ -20,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.mylink_10.R;
+import com.example.mylink_10.util.ThemeUtil;
 import com.example.mylink_10.util.ToastUtil;
 import com.example.mylink_10.util.getValuesUtil;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -75,6 +76,7 @@ public class CommunityRemarksActivity extends AppCompatActivity implements Adapt
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ThemeUtil.setTheme(this);
         super.onCreate(savedInstanceState);
         // 绑定XML布局文件
         setContentView(R.layout.activity_remarks);

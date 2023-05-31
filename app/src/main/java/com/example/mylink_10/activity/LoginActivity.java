@@ -15,6 +15,7 @@ import com.example.mylink_10.MainActivity;
 import com.example.mylink_10.R;
 import com.example.mylink_10.pojo.Result;
 import com.example.mylink_10.pojo.User;
+import com.example.mylink_10.util.ThemeUtil;
 import com.example.mylink_10.util.ToastUtil;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -37,6 +38,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ThemeUtil.setTheme(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         sharedPreferences = getSharedPreferences("option-config", Context.MODE_PRIVATE);

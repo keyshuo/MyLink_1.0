@@ -23,6 +23,7 @@
         android:layout_marginTop="70dp"
         android:background="@drawable/text_shape"
         android:hint="请输入账号"
+        android:textColorHint="@color/black"
         android:maxLength="11"
         android:textAlignment="center"
         />
@@ -34,6 +35,7 @@
         android:layout_marginTop="30dp"
         android:background="@drawable/text_shape"
         android:hint="6到16位密码"
+        android:textColorHint="@color/black"
         android:maxLength="16"
         android:textAlignment="center" />
 
