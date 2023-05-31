@@ -40,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
     private final int[] titles = {R.string.tab_home, R.string.tab_community, R.string.tab_my};
     private final int[] images = {R.drawable.home, R.drawable.classify, R.drawable.me};
     private int themeType;
+    private float textSize;
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +67,9 @@ public class MainActivity extends AppCompatActivity {
         } else {
             ToastUtil.show(this, username+",欢迎回来");
         }
+        TextView t = findViewById(R.id.tv_test);
+        textSize = t.getTextSize();
+//        Log.d("SIZE", String.valueOf(t.getTextSize()));
     }
 
     private void initView(Bundle mBundle) {
@@ -162,12 +167,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onRestart() {
         themeType = getValuesUtil.getIntValue(this,"themeType");
         if (themeType == 0) {                           //读取为亮色主题时
-            if (!getTheme().equals(R.style.AppTheme)){  //发现不为亮色主题时
+            if (textSize!=37){  //发现不为亮色主题时
                 recreate();
             }
         }
         if (themeType == 1) {
-            if (!getTheme().equals(R.style.AppTheme2)) {//读取为暗色主题时
+            if (textSize!=39) {//读取为暗色主题时
                 recreate();                             //发现不为暗色主题时
             }
         }

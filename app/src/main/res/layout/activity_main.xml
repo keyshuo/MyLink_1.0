@@ -7,6 +7,14 @@
     android:background="?attr/bgNormalColor"
     tools:context=".MainActivity">
 
+    <TextView
+        android:id="@+id/tv_test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="?attr/tvSize1"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
